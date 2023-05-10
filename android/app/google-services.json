@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "452147819618",
+    "project_id": "roomsalse",
+    "storage_bucket": "roomsalse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452147819618:android:d6f437263258d37b00cd3b",
+        "android_client_info": {
+          "package_name": "com.masterung.roomsalse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452147819618-688p224briirtam6q8m4r9tmi4se5vqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMz9PI7tECDMC3nLIZaJMV0wuFt4VPhpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452147819618-688p224briirtam6q8m4r9tmi4se5vqr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
