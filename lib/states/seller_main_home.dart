@@ -6,6 +6,7 @@ import 'package:roomsalse/utility/app_controller.dart';
 import 'package:roomsalse/utility/app_service.dart';
 import 'package:roomsalse/widgets/widget_button.dart';
 import 'package:roomsalse/widgets/widget_image.dart';
+import 'package:roomsalse/widgets/widget_list_room.dart';
 import 'package:roomsalse/widgets/widget_text.dart';
 
 class SellerMainHome extends StatefulWidget {
@@ -44,6 +45,7 @@ class _SellerMainHomeState extends State<SellerMainHome> {
                 height: boxConstraints.maxHeight,
                 child: Stack(
                   children: [
+                    appController.sellerRoomModels.isEmpty ? const SizedBox() : WidgetListRoom(roomModels: appController.sellerRoomModels) ,
                     Positioned(
                       bottom: 16,
                       right: 16,
