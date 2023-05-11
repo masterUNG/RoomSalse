@@ -7,6 +7,10 @@ import 'package:roomsalse/utility/app_controller.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
+  Future<void> processAddDetail({required String detail}) async {
+    print('loginUserModel at processAddDetail ---> ${appController.loginUserModels.length}');
+  }
+
   Future<void> findUserModelLogin() async {
     FirebaseAuth.instance.authStateChanges().listen((event) async {
       if (event != null) {

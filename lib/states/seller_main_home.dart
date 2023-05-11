@@ -2,12 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:roomsalse/states/add_new_room.dart';
 import 'package:roomsalse/utility/app_constant.dart';
+import 'package:roomsalse/utility/app_service.dart';
 import 'package:roomsalse/widgets/widget_button.dart';
 import 'package:roomsalse/widgets/widget_image.dart';
 import 'package:roomsalse/widgets/widget_text.dart';
 
-class SellerMainHome extends StatelessWidget {
+class SellerMainHome extends StatefulWidget {
   const SellerMainHome({super.key});
+
+  @override
+  State<SellerMainHome> createState() => _SellerMainHomeState();
+}
+
+class _SellerMainHomeState extends State<SellerMainHome> {
+  @override
+  void initState() {
+    super.initState();
+    AppService().findUserModelLogin();
+  }
 
   @override
   Widget build(BuildContext context) {

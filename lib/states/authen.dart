@@ -93,6 +93,7 @@ class _AuthenState extends State<Authen> {
                               appController.loginUserModels.add(userModel);
 
                               Get.offAllNamed('/${userModel.typeUser}');
+                               print('loginUserModel at authen ---> ${appController.loginUserModels.length}');
 
                               AppSnackBar(
                                       title: 'Login Success',

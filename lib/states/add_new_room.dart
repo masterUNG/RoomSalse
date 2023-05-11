@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roomsalse/utility/app_constant.dart';
+import 'package:roomsalse/utility/app_service.dart';
+import 'package:roomsalse/utility/app_snackbar.dart';
 import 'package:roomsalse/widgets/widget_button.dart';
 import 'package:roomsalse/widgets/widget_form.dart';
 import 'package:roomsalse/widgets/widget_text.dart';
@@ -47,7 +49,16 @@ class _AddNewRoomState extends State<AddNewRoom> {
                   children: [
                     WidgetButton(
                       label: 'Add New Room',
-                      pressFunc: () {},
+                      pressFunc: () {
+                        if (detail?.isEmpty ?? true) {
+                          AppSnackBar(
+                                  title: 'Detail ?',
+                                  message: 'Please Fill Detail')
+                              .errorSnackBar();
+                        } else {
+                          AppService().processAddDetail(detail: detail!);
+                        }
+                      },
                     ),
                   ],
                 ),
