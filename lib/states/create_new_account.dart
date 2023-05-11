@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:roomsalse/models/user_model.dart';
 import 'package:roomsalse/utility/app_constant.dart';
 import 'package:roomsalse/utility/app_controller.dart';
 import 'package:roomsalse/utility/app_snackbar.dart';
 import 'package:roomsalse/widgets/widget_button.dart';
 import 'package:roomsalse/widgets/widget_form.dart';
 import 'package:roomsalse/widgets/widget_text.dart';
-
 
 class CreateNewAccount extends StatefulWidget {
   const CreateNewAccount({super.key});
@@ -20,7 +20,7 @@ class CreateNewAccount extends StatefulWidget {
 class _CreateNewAccountState extends State<CreateNewAccount> {
   var types = <String>[
     'Buyer',
-    'Shopper',
+    'Seller',
   ];
 
   String? name, email, password;
@@ -103,30 +103,57 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     WidgetButton(
-                      
-                     
                       label: 'Create New Account',
                       pressFunc: () async {
                         if ((name?.isEmpty ?? true) ||
                             (email?.isEmpty ?? true) ||
                             (password?.isEmpty ?? true)) {
                           AppSnackBar(
-                                
                                   title: 'Have Space ?',
                                   message: 'Please Fill Every Blank')
                               .errorSnackBar();
                         } else if (appController.typeUsers.length == 1) {
                           AppSnackBar(
-                                 
                                   title: 'No Choose TypeUser ?',
                                   message: 'Please Choose Type User')
                               .errorSnackBar();
                         } else {
-                         
+                          await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                                  email: email!, password: password!)
+                              .then((value) async {
+                            String uid = value.user!.uid;
+
+                            UserModel userModel = UserModel(
+                                uid: uid,
+                                name: name!,
+                                email: email!,
+                                password: password!,
+                                typeUser: appController.typeUsers.last!);
+
+                            await FirebaseFirestore.instance
+                                .collection('user')
+                                .doc(uid)
+                                .set(userModel.toMap())
+                                .then((value) {
+                              Get.back();
+                              AppSnackBar(
+                                  title: 'Create Account Success',
+                                  message: 'Welcome $name to MyApp');
+                            });
+
+                            print('userModel -----> ${userModel.toMap()}');
+                          }).catchError((onError) {
+                            AppSnackBar(
+                                    title: onError.code,
+                                    message: onError.message)
+                                .errorSnackBar();
+                          });
                         }
                       },
                     ),
