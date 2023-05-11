@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:roomsalse/utility/app_constant.dart';
+import 'package:roomsalse/utility/app_controller.dart';
 import 'package:roomsalse/utility/app_service.dart';
 import 'package:roomsalse/utility/app_snackbar.dart';
 import 'package:roomsalse/widgets/widget_button.dart';
 import 'package:roomsalse/widgets/widget_form.dart';
+import 'package:roomsalse/widgets/widget_image.dart';
 import 'package:roomsalse/widgets/widget_text.dart';
 
 class AddNewRoom extends StatefulWidget {
@@ -15,6 +18,7 @@ class AddNewRoom extends StatefulWidget {
 
 class _AddNewRoomState extends State<AddNewRoom> {
   String? detail;
+  AppController appController = Get.put(AppController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,27 @@ class _AddNewRoomState extends State<AddNewRoom> {
       ),
       body: ListView(
         children: [
+          Obx(() {
+            return appController.files.isEmpty
+                ? WidgetImage(
+                    pathImage: 'images/camera.png',
+                    size: 200,
+                    tapFunc: () {
+                      AppService().processTakePhoto();
+                    },
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.file(
+                        appController.files.last,
+                        width: 200,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  );
+          }),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -54,6 +79,11 @@ class _AddNewRoomState extends State<AddNewRoom> {
                           AppSnackBar(
                                   title: 'Detail ?',
                                   message: 'Please Fill Detail')
+                              .errorSnackBar();
+                        } else if (appController.files.isEmpty) {
+                          AppSnackBar(
+                                  title: 'Photo ?',
+                                  message: 'Please Take Photo')
                               .errorSnackBar();
                         } else {
                           AppService().processAddDetail(detail: detail!);
