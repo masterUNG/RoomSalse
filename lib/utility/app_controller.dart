@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:roomsalse/models/room_model.dart';
 import 'package:roomsalse/models/user_model.dart';
 
 class AppController extends GetxController {
@@ -8,4 +9,5 @@ class AppController extends GetxController {
   RxList<String?> typeUsers = <String?>[null].obs;
   RxList<UserModel> loginUserModels = <UserModel>[].obs;
   RxList<File> files = <File>[].obs;
+  RxList<RoomModel> sellerRoomModels = <RoomModel>[].obs;
 }

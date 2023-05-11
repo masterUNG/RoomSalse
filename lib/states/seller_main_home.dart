@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:roomsalse/states/add_new_room.dart';
 import 'package:roomsalse/utility/app_constant.dart';
+import 'package:roomsalse/utility/app_controller.dart';
 import 'package:roomsalse/utility/app_service.dart';
 import 'package:roomsalse/widgets/widget_button.dart';
 import 'package:roomsalse/widgets/widget_image.dart';
@@ -18,7 +19,9 @@ class _SellerMainHomeState extends State<SellerMainHome> {
   @override
   void initState() {
     super.initState();
-    AppService().findUserModelLogin();
+    AppService()
+        .findUserModelLogin()
+        .then((value) => AppService().readRoomSeller());
   }
 
   @override
@@ -32,25 +35,31 @@ class _SellerMainHomeState extends State<SellerMainHome> {
         ),
       ),
       body: LayoutBuilder(builder: (context, BoxConstraints boxConstraints) {
-        return SizedBox(
-          width: boxConstraints.maxWidth,
-          height: boxConstraints.maxHeight,
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: 16,
-                right: 16,
-                child: WidgetButton(
-                  label: 'Add Room',
-                  pressFunc: () {
-                    
-                    Get.to(const AddNewRoom())!.then((value) {});
-                  },
+        return GetX(
+            init: AppController(),
+            builder: (AppController appController) {
+              print('roomModels ---> ${appController.sellerRoomModels.length}');
+              return SizedBox(
+                width: boxConstraints.maxWidth,
+                height: boxConstraints.maxHeight,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      bottom: 16,
+                      right: 16,
+                      child: WidgetButton(
+                        label: 'Add Room',
+                        pressFunc: () {
+                          Get.to(const AddNewRoom())!.then((value) {
+                            AppService().readRoomSeller();
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        );
+              );
+            });
       }),
     );
   }
