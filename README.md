@@ -16,7 +16,6 @@ http://line.me/ti/p/XI-Ksj7Jzq
 
 [![Line-_QR.jpg](https://s26.postimg.cc/dwuoozv15/Line-_QR.jpg)](https://postimg.cc/image/mrvizijth/)
 
-https://www.flutterthailand.com
 
 https://www.androidthai.in.th
 
