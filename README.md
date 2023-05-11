@@ -10,6 +10,10 @@
 
 [![IMG_6065.jpg](https://s26.postimg.cc/kajrs6fbt/IMG_6065.jpg)](https://postimg.cc/image/7j5llo5jp/)
 
+[![screenshot-1683844426577.png](https://i.postimg.cc/76M8YXL6/screenshot-1683844426577.png)](https://postimg.cc/k64hTQK3)
+
+[![screenshot-1683849398090.png](https://i.postimg.cc/T1d8ymyc/screenshot-1683849398090.png)](https://postimg.cc/2bK9M17q)
+
 https://bit.ly/32yar4n
 
 http://line.me/ti/p/XI-Ksj7Jzq

@@ -15,6 +15,37 @@ import 'package:path/path.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
+  Future<void> readAllRoomBuyer() async {
+    if (appController.buyerRoomModels.isNotEmpty) {
+      appController.buyerRoomModels.clear();
+    }
+
+    await FirebaseFirestore.instance
+        .collection('user')
+        .where('typeUser', isEqualTo: 'Seller')
+        .get()
+        .then((value) async {
+      print('value readAllRoomBuyer ----> ${value.docs.length}');
+      if (value.docs.isNotEmpty) {
+        for (var element in value.docs) {
+          await FirebaseFirestore.instance
+              .collection('user')
+              .doc(element.id)
+              .collection('room')
+              .get()
+              .then((value) {
+            if (value.docs.isNotEmpty) {
+              for (var element in value.docs) {
+                RoomModel roomModel = RoomModel.fromMap(element.data());
+                appController.buyerRoomModels.add(roomModel);
+              }
+            }
+          });
+        }
+      }
+    });
+  }
+
   Future<void> readRoomSeller() async {
     if (appController.sellerRoomModels.isNotEmpty) {
       appController.sellerRoomModels.clear();
@@ -75,17 +106,16 @@ class AppService {
 
   Future<void> findUserModelLogin() async {
     var user = FirebaseAuth.instance.currentUser;
-     await FirebaseFirestore.instance
-            .collection('user')
-            .doc(user!.uid)
-            .get()
-            .then((value) {
-          if (value.data() != null) {
-            UserModel userModel = UserModel.fromMap(value.data()!);
-            print(
-                'loginUserModel at findUserModelLogin ---> ${userModel.toMap()}');
-            appController.loginUserModels.add(userModel);
-          }
-        });
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      if (value.data() != null) {
+        UserModel userModel = UserModel.fromMap(value.data()!);
+        print('loginUserModel at findUserModelLogin ---> ${userModel.toMap()}');
+        appController.loginUserModels.add(userModel);
+      }
+    });
   }
 }

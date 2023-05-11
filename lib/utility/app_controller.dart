@@ -10,4 +10,5 @@ class AppController extends GetxController {
   RxList<UserModel> loginUserModels = <UserModel>[].obs;
   RxList<File> files = <File>[].obs;
   RxList<RoomModel> sellerRoomModels = <RoomModel>[].obs;
+  RxList<RoomModel> buyerRoomModels = <RoomModel>[].obs;
 }
