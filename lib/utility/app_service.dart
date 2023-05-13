@@ -75,7 +75,11 @@ class AppService {
     }
   }
 
-  Future<void> processAddDetail({required String detail}) async {
+  Future<void> processAddDetail(
+      {required String detail,
+      required String price,
+      required String priceEle,
+      required String amount}) async {
     print(
         'loginUserModel at processAddDetail ---> ${appController.loginUserModels.length}');
 
@@ -89,7 +93,12 @@ class AppService {
       await reference.getDownloadURL().then((value) async {
         String url = value.toString();
         print('url --> $url');
-        RoomModel roomModel = RoomModel(detail: detail, url: url);
+        RoomModel roomModel = RoomModel(
+            detail: detail,
+            url: url,
+            price: price,
+            priceEle: priceEle,
+            amount: amount);
         await FirebaseFirestore.instance
             .collection('user')
             .doc(appController.loginUserModels.last.uid)

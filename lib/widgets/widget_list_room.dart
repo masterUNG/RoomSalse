@@ -5,6 +5,7 @@ import 'package:roomsalse/models/room_model.dart';
 import 'package:roomsalse/utility/app_constant.dart';
 import 'package:roomsalse/widgets/widget_image_network.dart';
 import 'package:roomsalse/widgets/widget_text.dart';
+import 'package:roomsalse/widgets/widget_text_rich.dart';
 
 class WidgetListRoom extends StatelessWidget {
   const WidgetListRoom({
@@ -29,9 +30,16 @@ class WidgetListRoom extends StatelessWidget {
             ),
           ),
           SizedBox(height: 150,
-            child: WidgetText(
-              data: roomModels[index].detail,
-              textStyle: AppConstant().h3Style(),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                WidgetText(
+                  data: roomModels[index].detail,
+                  textStyle: AppConstant().h3Style(fontWeight: FontWeight.bold,size: 16),
+                ),
+                WidgetTextRich(head: 'ราคา', value: roomModels[index].price),
+                WidgetTextRich(head: 'ราคาต่อหน่วย', value: roomModels[index].priceEle),
+                WidgetTextRich(head: 'จำนวนห้อง', value: roomModels[index].amount),
+              ],
             ),
           )
         ],

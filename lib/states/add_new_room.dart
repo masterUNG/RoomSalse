@@ -17,7 +17,7 @@ class AddNewRoom extends StatefulWidget {
 }
 
 class _AddNewRoomState extends State<AddNewRoom> {
-  String? detail;
+  String? detail, price, priceEle, amount;
   AppController appController = Get.put(AppController());
 
   @override
@@ -66,6 +66,42 @@ class _AddNewRoomState extends State<AddNewRoom> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              WidgetForm(
+                changeFunc: (p0) {
+                  price = p0.trim();
+                },
+                labelWidget: const WidgetText(data: 'ราคาห้อง :'),
+                textInputType: TextInputType.number,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              WidgetForm(
+                changeFunc: (p0) {
+                  priceEle = p0.trim();
+                },
+                labelWidget: const WidgetText(data: 'ราคาค่าไฟต่อหน่วย :'),
+                textInputType: TextInputType.number,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              WidgetForm(
+                changeFunc: (p0) {
+                  amount = p0.trim();
+                },
+                labelWidget: const WidgetText(data: 'จำนวนห้อง :'),
+                textInputType: TextInputType.number,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               Container(
                 margin: const EdgeInsets.only(top: 16),
                 width: 250,
@@ -75,10 +111,13 @@ class _AddNewRoomState extends State<AddNewRoom> {
                     WidgetButton(
                       label: 'Add New Room',
                       pressFunc: () {
-                        if (detail?.isEmpty ?? true) {
+                        if ((detail?.isEmpty ?? true) ||
+                            (price?.isEmpty ?? true) ||
+                            (priceEle?.isEmpty ?? true) ||
+                            (amount?.isEmpty ?? true)) {
                           AppSnackBar(
-                                  title: 'Detail ?',
-                                  message: 'Please Fill Detail')
+                                  title: 'Have Space ?',
+                                  message: 'Please Fill EveryBlank')
                               .errorSnackBar();
                         } else if (appController.files.isEmpty) {
                           AppSnackBar(
@@ -86,7 +125,7 @@ class _AddNewRoomState extends State<AddNewRoom> {
                                   message: 'Please Take Photo')
                               .errorSnackBar();
                         } else {
-                          AppService().processAddDetail(detail: detail!);
+                          AppService().processAddDetail(detail: detail!, price: price!, priceEle: priceEle!, amount: amount!);
                         }
                       },
                     ),
