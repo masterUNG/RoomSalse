@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:roomsalse/states/authen.dart';
 import 'package:roomsalse/states/buyer_main_home.dart';
 import 'package:roomsalse/states/seller_main_home.dart';
+import 'package:roomsalse/utility/app_controller.dart';
+import 'package:roomsalse/utility/app_service.dart';
 
 var getPages = <GetPage<dynamic>>[
   GetPage(
@@ -20,12 +23,24 @@ var getPages = <GetPage<dynamic>>[
   ),
 ];
 
-String initialPage = '/authen';
+String? initialPage;
 
 Future<void> main() async {
+  AppController appController = Get.put(AppController());
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp().then((value) {
-    runApp(MyApp());
+    FirebaseAuth.instance.authStateChanges().listen((event) async {
+      if (event != null) {
+        AppService().findUserModelLogin().then((value) {
+          initialPage = '/${appController.loginUserModels.last.typeUser}';
+          runApp(const MyApp());
+        });
+      } else {
+        initialPage = '/authen';
+        runApp(const MyApp());
+      }
+    });
   });
 }
 

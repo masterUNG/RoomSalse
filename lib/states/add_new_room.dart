@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:roomsalse/utility/app_constant.dart';
 import 'package:roomsalse/utility/app_controller.dart';
+import 'package:roomsalse/utility/app_dialog.dart';
 import 'package:roomsalse/utility/app_service.dart';
 import 'package:roomsalse/utility/app_snackbar.dart';
 import 'package:roomsalse/widgets/widget_button.dart';
 import 'package:roomsalse/widgets/widget_form.dart';
 import 'package:roomsalse/widgets/widget_image.dart';
 import 'package:roomsalse/widgets/widget_text.dart';
+import 'package:roomsalse/widgets/widget_text_button.dart';
 
 class AddNewRoom extends StatefulWidget {
   const AddNewRoom({super.key});
@@ -37,7 +40,30 @@ class _AddNewRoomState extends State<AddNewRoom> {
                     pathImage: 'images/camera.png',
                     size: 200,
                     tapFunc: () {
-                      AppService().processTakePhoto();
+                      AppDialog(context: context).normalDialog(
+                          title: 'Image Source',
+                          iconWidget: const WidgetImage(
+                            pathImage: 'images/camera.png',
+                            size: 150,
+                          ),
+                          firstButtonWidget: WidgetTextButton(
+                            label: 'Camera',
+                            pressFunc: () {
+                              AppService()
+                                  .processTakePhoto(
+                                      imageSource: ImageSource.camera)
+                                  .then((value) => Get.back());
+                            },
+                          ),
+                          secondButtonWidget: WidgetTextButton(
+                            label: 'Gallery',
+                            pressFunc: () {
+                              AppService()
+                                  .processTakePhoto(
+                                      imageSource: ImageSource.gallery)
+                                  .then((value) => Get.back());
+                            },
+                          ));
                     },
                   )
                 : Row(
@@ -125,7 +151,11 @@ class _AddNewRoomState extends State<AddNewRoom> {
                                   message: 'Please Take Photo')
                               .errorSnackBar();
                         } else {
-                          AppService().processAddDetail(detail: detail!, price: price!, priceEle: priceEle!, amount: amount!);
+                          AppService().processAddDetail(
+                              detail: detail!,
+                              price: price!,
+                              priceEle: priceEle!,
+                              amount: amount!);
                         }
                       },
                     ),

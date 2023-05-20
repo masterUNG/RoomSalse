@@ -15,6 +15,12 @@ import 'package:path/path.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
+  Future<void> processSignOut() async {
+    FirebaseAuth.instance.signOut().then((value) {
+      Get.offAllNamed('/authen');
+    });
+  }
+
   Future<void> readAllRoomBuyer() async {
     if (appController.buyerRoomModels.isNotEmpty) {
       appController.buyerRoomModels.clear();
@@ -67,9 +73,9 @@ class AppService {
     });
   }
 
-  Future<void> processTakePhoto() async {
+  Future<void> processTakePhoto({required ImageSource imageSource}) async {
     var result = await ImagePicker()
-        .pickImage(source: ImageSource.camera, maxWidth: 800, maxHeight: 800);
+        .pickImage(source: imageSource, maxWidth: 800, maxHeight: 800);
     if (result != null) {
       appController.files.add(File(result.path));
     }
